@@ -7,6 +7,9 @@ import { uuid } from "@/utils/uuid";
 import { Team } from "@/entity";
 import { source } from "@/database";
 import { FastifyInstance } from "fastify";
+import { ITeamGetParams } from "@/@types/team/ITeamGetParams";
+import { ITeamGetResponse } from "@/@types/team/ITeamGetResponse";
+import { isUserInTeamAndThrow } from "@/utils/isUserInTeamAndThrow";
 
 const post_teams: RouteHandlerMethodWrapper<{
   Body: IPostTeamsBody;
@@ -34,8 +37,23 @@ const post_teams: RouteHandlerMethodWrapper<{
   });
 };
 
+const get_teams_teamId: RouteHandlerMethodWrapper<{
+  Params: ITeamGetParams;
+  Reply: ITeamGetResponse;
+}> = async (request) => {
+  const { teamId } = request.params;
+  const user = await getUser(request);
+  const team = await source.manager.findOneBy(Team, { id: teamId });
+  if (!team) {
+    throw new Error("Team not found");
+  }
+  isUserInTeamAndThrow(user, team);
+  return { team };
+};
+
 const setupTeams = (app: FastifyInstance) => {
   app.post("/teams", post_teams);
+  app.get("/teams/:teamId", get_teams_teamId);
 };
 
 export { setupTeams };
