@@ -10,6 +10,7 @@ import { FastifyInstance } from "fastify";
 import { ITeamGetParams } from "@/@types/team/ITeamGetParams";
 import { ITeamGetResponse } from "@/@types/team/ITeamGetResponse";
 import { isUserInTeamAndThrow } from "@/utils/isUserInTeamAndThrow";
+import {ITeamDeleteParams} from "@/@types/team/ITeamDeleteParams";
 
 const post_teams: RouteHandlerMethodWrapper<{
   Body: IPostTeamsBody;
@@ -51,9 +52,24 @@ const get_teams_teamId: RouteHandlerMethodWrapper<{
   return { team };
 };
 
+const delete_teams_teamId: RouteHandlerMethodWrapper<{
+  Params: ITeamDeleteParams;
+}> = async (request) => {
+  const { teamId } = request.params;
+  const user = await getUser(request);
+  const team = await source.manager.findOneBy(Team, { id: teamId });
+  if (!team) {
+    throw new Error("Team not found");
+  }
+  if (team.owner.id !== user.id)
+    throw new Error("You are not the owner of this team");
+  await source.manager.remove(team);
+};
+
 const setupTeams = (app: FastifyInstance) => {
   app.post("/teams", post_teams);
   app.get("/teams/:teamId", get_teams_teamId);
+  app.delete("/teams/:teamId", delete_teams_teamId);
 };
 
 export { setupTeams };
