@@ -1,10 +1,6 @@
 import { DataSource } from "typeorm";
 import "dotenv/config";
-import { Comment } from "@/entity/Comment";
-import { Team } from "@/entity/Team";
-import { TeamToTech } from "@/entity/TeamToTech";
-import { User } from "@/entity/User";
-import { UserToTech } from "@/entity/UserToTech";
+import { Comment, Team, TeamToTech, User, UserToTech } from "@/entity/";
 
 const datasource = new DataSource({
   type: "mariadb",
