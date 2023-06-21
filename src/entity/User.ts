@@ -8,10 +8,10 @@ import {
 } from "typeorm";
 import { Team } from "@/entity/Team";
 import { UserToTech } from "@/entity/UserToTech";
+import { IUser } from "@/@types";
 
 @Entity()
-class User {
-  // implements IUser
+class User implements IUser {
   @PrimaryColumn()
   id: string;
   @Column()
