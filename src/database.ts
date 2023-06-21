@@ -1,5 +1,10 @@
 import { DataSource } from "typeorm";
 import "dotenv/config";
+import { Comment } from "@/entity/Comment";
+import { Team } from "@/entity/Team";
+import { TeamToTech } from "@/entity/TeamToTech";
+import { User } from "@/entity/User";
+import { UserToTech } from "@/entity/UserToTech";
 
 const datasource = new DataSource({
   type: "mariadb",
@@ -10,7 +15,7 @@ const datasource = new DataSource({
   logging: true,
   synchronize: true,
   database: process.env.DB_NAME,
-  entities: [],
+  entities: [Comment, Team, TeamToTech, User, UserToTech],
 });
 
 let source: DataSource;
