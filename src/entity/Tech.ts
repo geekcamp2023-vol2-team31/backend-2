@@ -13,5 +13,7 @@ class Tech implements ITech {
   teamsUsed: TeamToTech[];
   @OneToMany(() => UserToTech, (userToTech) => userToTech.tech)
   userToTechs: UserToTech[];
+  @OneToMany(() => UserToTech, (userToTech) => userToTech.tech)
+  productToTechs: UserToTech[];
 }
 export { Tech };

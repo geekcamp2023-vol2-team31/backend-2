@@ -1,8 +1,8 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { Comment } from "@/entity/Comment";
 import { Team } from "@/entity/Team";
 import { IProduct } from "@/@types/entity";
-import { Tech } from "@/entity/Tech";
+import { ProductToTech } from "@/entity/ProductToTech";
 
 @Entity()
 class Product implements IProduct {
@@ -13,7 +13,9 @@ class Product implements IProduct {
   name: string;
   @OneToMany(() => Comment, (comment) => comment.team)
   comments: Comment[];
-  techs: Tech[];
+  @OneToMany(() => ProductToTech, (productToTech) => productToTech.product)
+  productToTech: ProductToTech[];
+  @OneToOne(() => Team)
   team: Team;
 }
 export { Product };

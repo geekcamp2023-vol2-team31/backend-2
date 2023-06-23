@@ -20,3 +20,10 @@ export type IPutUsersMeBody = {
     userToTechs: { name: string; level: ITechLevel }[];
   };
 };
+
+export type IPutUsersMeTeamParams = {
+  invitationCode: string;
+};
+export type IPutUsersMeTeamResponse = {
+  teamId: string;
+};

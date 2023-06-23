@@ -5,3 +5,4 @@ export * from "./IUser";
 export * from "./ITech";
 export * from "./IUserToTech";
 export * from "./ITeamToTech";
+export * from "./IProductToTech";
