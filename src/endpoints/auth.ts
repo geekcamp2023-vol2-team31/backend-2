@@ -2,6 +2,8 @@ import type { RouteHandlerMethodWrapper } from "@/endpoints/RouteHandlerMethodWr
 import { source } from "@/database";
 import { User } from "@/entity";
 import { FastifyInstance } from "fastify";
+import { GithubUserResponse } from "@/@types/github";
+import { uuid } from "@/utils/uuid";
 
 const post_auth: RouteHandlerMethodWrapper<{
   Body: { token: string };
@@ -26,9 +28,17 @@ const post_auth: RouteHandlerMethodWrapper<{
       isFirstLogin: false,
     });
   }
-  const res = (await req.json()) as unknown as { email: string };
-  request.session.set("email", res.email);
-  const user = await source.manager.findOneBy(User, { email: res.email });
+  const res = (await req.json()) as unknown as GithubUserResponse;
+  request.session.set("githubId", res.id);
+  const user = await source.manager.findOneBy(User, { githubId: res.id });
+  if (!user) {
+    const newUser = new User();
+    newUser.id = uuid();
+    newUser.bio = "";
+    newUser.githubId = res.id;
+    newUser.name = res.name;
+    await source.manager.save(newUser);
+  }
   await reply.send({
     type: "AuthResponse",
     status: "ok",

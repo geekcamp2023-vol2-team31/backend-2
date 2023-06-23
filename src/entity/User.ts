@@ -21,11 +21,12 @@ class User implements IUser {
   @Column()
   name: string;
   @Column()
-  email: string;
+  githubId: number;
   @ManyToMany(() => Team, (team) => team.members)
   @JoinTable()
   teamsBelongs: Team[];
   @OneToMany(() => Team, (team) => team.owner)
+  @JoinTable()
   teamsOwns: Team[];
   @OneToMany(() => UserToTech, (userToTech) => userToTech.user)
   userToTechs: UserToTech[];

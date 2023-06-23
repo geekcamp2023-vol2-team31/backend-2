@@ -4,6 +4,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   JoinColumn,
+  OneToOne,
 } from "typeorm";
 import { Team } from "@/entity/Team";
 import { IComment, ICommentType } from "@/@types/entity";
@@ -17,8 +18,10 @@ class Comment implements IComment {
   @Column()
   type: ICommentType;
   @ManyToOne(() => Team)
-  @JoinColumn({ name: "teamId", referencedColumnName: "id" })
+  @JoinColumn()
   team: Team;
+  @OneToOne(() => Comment)
+  next?: Comment;
 }
 
 export { Comment };

@@ -1,4 +1,11 @@
-import { Column, Entity, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from "typeorm";
 import { Comment } from "@/entity/Comment";
 import { Team } from "@/entity/Team";
 import { IProduct } from "@/@types/entity";
@@ -15,7 +22,8 @@ class Product implements IProduct {
   comments: Comment[];
   @OneToMany(() => ProductToTech, (productToTech) => productToTech.product)
   productToTech: ProductToTech[];
-  @OneToOne(() => Team)
+  @ManyToOne(() => Team)
+  @JoinColumn()
   team: Team;
 }
 export { Product };

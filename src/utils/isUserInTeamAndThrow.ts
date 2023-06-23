@@ -1,9 +1,9 @@
 import { isUserInTeam } from "./isUserInTeam";
-import { ITeam, IUser } from "@/@types/entity";
+import { Team, User } from "@/entity";
 
 export const isUserInTeamAndThrow = (
-  user: IUser,
-  team: ITeam,
+  user: User,
+  team: Team,
   message = "You are not a member of the team."
 ) => {
   const isUserInTeamFlg = isUserInTeam(user, team);

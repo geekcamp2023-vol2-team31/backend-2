@@ -92,7 +92,9 @@ const delete_users_me_teams_invitationCode: RouteHandlerMethodWrapper<{
   if (!team) {
     throw new Error("The team is not found.");
   }
-  team.members = team.members.filter((member) => member.email !== user.email);
+  team.members = team.members.filter(
+    (member) => member.githubId !== user.githubId
+  );
   await source.manager.save(team);
   await reply.status(204);
 };

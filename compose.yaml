@@ -5,10 +5,14 @@ services:
     image: mysql:8-debian
     env_file:
       - .env
-
-  app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    env_file:
-      - .env
+    ports:
+      - 3306:3306
+  adminer:
+    container_name: adminer
+    hostname: adminer
+    image: adminer:4.7.5
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql

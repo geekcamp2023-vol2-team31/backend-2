@@ -10,7 +10,7 @@ const datasource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   port: 3306,
-  logging: true,
+  logging: "all",
   synchronize: true,
   database: process.env.DB_NAME,
   entities: [

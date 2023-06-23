@@ -2,8 +2,8 @@ import {
   Column,
   Entity,
   ManyToMany,
+  ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryColumn,
 } from "typeorm";
 import { User } from "@/entity/User";
@@ -22,7 +22,7 @@ class Team implements ITeam {
   members: User[];
   @Column()
   name: string;
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   owner: User;
   @OneToMany(() => Comment, (comment) => comment.team)
   comments: Comment[];
