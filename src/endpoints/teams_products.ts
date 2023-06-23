@@ -117,12 +117,37 @@ const put_teams_teamId_products_productId: RouteHandlerMethodWrapper<{
   await reply.status(200).send({ products });
 };
 
+const delete_teams_teamId_products_productId: RouteHandlerMethodWrapper<{
+  Params: ITeamsProductsParam;
+  Reply: ITeamsProductsResponse;
+}> = async (request, reply) => {
+  const { teamId, productId } = request.params;
+  const user = await getUser(request);
+  const team = await source.manager.findOne(Team, { where: { id: teamId } });
+  if (!team) throw new Error("The team is not found.");
+  isUserInTeamAndThrow(user, team);
+  const product = await source.manager.findOne(Product, {
+    where: { id: productId, team },
+    relations: ["productToTech", "productToTech.tech"],
+  });
+  if (!product) {
+    throw new Error("The product is not found.");
+  }
+  await source.manager.remove(product);
+  const products = await source.manager.find(Product, { where: { team } });
+  await reply.status(200).send({ products });
+};
+
 const setupTeamsProducts = (app: FastifyInstance) => {
   app.get("/teams/:teamId/products", get_teams_teamId_products);
   app.post("/teams/:teamId/products", post_teams_teamId_products);
   app.put(
     "/teams/:teamId/products/:productId",
     put_teams_teamId_products_productId
+  );
+  app.delete(
+    "/teams/:teamId/products/:productId",
+    delete_teams_teamId_products_productId
   );
 };
 
