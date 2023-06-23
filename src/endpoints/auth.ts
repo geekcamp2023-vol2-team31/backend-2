@@ -37,7 +37,7 @@ const post_auth: RouteHandlerMethodWrapper<{
     newUser.id = uuid();
     newUser.bio = "";
     newUser.githubId = res.id;
-    newUser.name = res.name;
+    newUser.name = res.name || res.login || "";
     await source.manager.save(newUser);
   }
   await reply.send({
