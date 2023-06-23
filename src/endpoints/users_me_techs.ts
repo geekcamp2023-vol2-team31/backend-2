@@ -32,7 +32,7 @@ const post_users_me_techs: RouteHandlerMethodWrapper<{
     relations: ["tech"],
   });
   await reply.status(200).send({
-    techs: links.map((link) => link.tech),
+    techs: links,
   });
 };
 
@@ -56,7 +56,7 @@ const put_users_me_techs_name: RouteHandlerMethodWrapper<{
     relations: ["tech"],
   });
   await reply.status(200).send({
-    techs: links.map((link) => link.tech),
+    techs: links,
   });
 };
 
@@ -75,7 +75,7 @@ const delete_users_me_techs_name: RouteHandlerMethodWrapper<{
     relations: ["tech"],
   });
   await reply.status(200).send({
-    techs: links.map((link) => link.tech),
+    techs: links,
   });
 };
 

@@ -1,4 +1,4 @@
-import { ITech, ITechLevel } from "@/@types/entity";
+import { ITechLevel, IUserToTech } from "@/@types/entity";
 
 export type IPostUsersMeTechsBody = {
   name: string;
@@ -13,5 +13,5 @@ export type IPutUsersMeTechsBody = {
 };
 
 export type IUsersMeTechsResponse = {
-  techs: ITech[];
+  techs: IUserToTech[];
 };

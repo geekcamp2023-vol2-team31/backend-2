@@ -14,6 +14,7 @@ import { FastifyInstance } from "fastify";
 import { Comment } from "@/entity";
 import { ProductToTech } from "@/entity/ProductToTech";
 import { getOrCreateTech } from "@/utils/tech";
+import { setupTeamsProductsTechs } from "@/endpoints/teams_products_techs";
 
 const get_teams_teamId_products: RouteHandlerMethodWrapper<{
   Params: ITeamParams;
@@ -149,6 +150,7 @@ const setupTeamsProducts = (app: FastifyInstance) => {
     "/teams/:teamId/products/:productId",
     delete_teams_teamId_products_productId
   );
+  setupTeamsProductsTechs(app);
 };
 
 export { setupTeamsProducts };
