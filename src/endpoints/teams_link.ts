@@ -78,10 +78,28 @@ const put_teams_teamId_links_linkId: RouteHandlerMethodWrapper<{
   });
 };
 
+const delete_teams_teamId_links_linkId: RouteHandlerMethodWrapper<{
+  Params: ITeamsLinkParams;
+  Reply: ITeamsLinkResponse;
+}> = async (request, reply) => {
+  const { teamId, linkId } = request.params;
+  const user = await getUser(request);
+  const team = await source.manager.findOne(Team, { where: { id: teamId } });
+  if (!team) throw new Error("The team is not found.");
+  isUserInTeamAndThrow(user, team);
+  const link = await source.manager.findOneBy(Link, { id: linkId });
+  await source.manager.remove(link);
+  const links = await source.manager.find(Link, { where: { team } });
+  await reply.status(200).send({
+    links,
+  });
+};
+
 const setupTeamsLinks = (app: FastifyInstance) => {
   app.get("/teams/:teamId/links", get_teams_teamId_links);
   app.post("/teams/:teamId/links", post_teams_teamId_links);
   app.put("/teams/:teamId/links/:linkId", put_teams_teamId_links_linkId);
+  app.delete("/teams/:teamId/links/:linkId", delete_teams_teamId_links_linkId);
 };
 
 export { setupTeamsLinks };
