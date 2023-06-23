@@ -7,7 +7,10 @@ const getUser = async (request: FastifyRequest): Promise<User> => {
   if (typeof email !== "string") {
     throw new Error("Unauthorized");
   }
-  const user = await source.manager.findOneBy(User, { email });
+  const user = await source.manager.findOne(User, {
+    where: { email },
+    relations: ["teamsBelongs", "teamsOwns", "userToTechs", "userToTechs.tech"],
+  });
   if (!user) {
     throw new Error("Not registered");
   }
