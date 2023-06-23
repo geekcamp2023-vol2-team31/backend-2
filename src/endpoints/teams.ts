@@ -4,8 +4,8 @@ import {
   IPostTeamsResponse,
   ITeamGetResponse,
   ITeamParams,
-} from "@/@types/teams";
-import { UnauthorizedError } from "@/@types.old/error/Error";
+  UnauthorizedError,
+} from "@/@types";
 import { getUser } from "@/utils/auth";
 import { uuid } from "@/utils/uuid";
 import { Team } from "@/entity";

@@ -1,7 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { setupUsers } from "@/endpoints";
-import { setupAuth } from "@/endpoints/auth";
-import { setupTeams } from "@/endpoints/teams";
+import { setupUsers, setupAuth, setupTeams } from "@/endpoints";
 
 const registerEndpointHandler = (app: FastifyInstance) => {
   setupAuth(app);
