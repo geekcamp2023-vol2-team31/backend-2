@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { RouteHandlerMethodWrapper } from "@/endpoints/RouteHandlerMethodWrapper";
 import { getUser } from "@/utils/auth";
 import {
+  IDeleteUsersMeTeamParams,
   IGetUsersMeResponse,
   IPutUsersMeBody,
   IPutUsersMeTeamParams,
@@ -33,7 +34,7 @@ const get_users_me: RouteHandlerMethodWrapper<{
 const put_users_me: RouteHandlerMethodWrapper<{
   Params: IPutUsersMeBody;
   Reply: undefined;
-}> = async (request) => {
+}> = async (request, reply) => {
   const newUser = request.params.user;
   const user = await getUser(request);
   user.name = newUser.name;
@@ -57,6 +58,7 @@ const put_users_me: RouteHandlerMethodWrapper<{
     item.level = val.level;
     await source.manager.save(tech);
   }
+  await reply.status(204);
 };
 
 const put_users_me_teams_invitationCode: RouteHandlerMethodWrapper<{
@@ -79,10 +81,27 @@ const put_users_me_teams_invitationCode: RouteHandlerMethodWrapper<{
   });
 };
 
+const delete_users_me_teams_invitationCode: RouteHandlerMethodWrapper<{
+  Params: IDeleteUsersMeTeamParams;
+  Reply: undefined;
+}> = async (request, reply) => {
+  const user = await getUser(request);
+  const team = await source.manager.findOneBy(Team, {
+    id: request.params.teamId,
+  });
+  if (!team) {
+    throw new Error("The team is not found.");
+  }
+  team.members = team.members.filter((member) => member.email !== user.email);
+  await source.manager.save(team);
+  await reply.status(204);
+};
+
 const setupUsers = (app: FastifyInstance) => {
   app.get("/users/me", get_users_me);
   app.put("/users/me", put_users_me);
   app.put("/users/me/teams/:invitationCode", put_users_me_teams_invitationCode);
+  app.delete("/users/me/teams/:teamId", delete_users_me_teams_invitationCode);
 };
 
 export { setupUsers };

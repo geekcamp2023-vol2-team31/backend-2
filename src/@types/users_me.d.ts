@@ -30,3 +30,7 @@ export type IPutUsersMeTeamResponse = {
     name: string;
   };
 };
+
+export type IDeleteUsersMeTeamParams = {
+  teamId: string;
+};
