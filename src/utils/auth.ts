@@ -9,7 +9,7 @@ const getUser = async (request: FastifyRequest): Promise<User> => {
   }
   const user = await source.manager.findOne(User, {
     where: { githubId },
-    relations: ["teamsBelongs", "teamsOwns", "userToTechs"],
+    relations: ["teamsBelongs", "teamsOwns", "userToTechs", "userToTechs.tech"],
   });
   if (!user) {
     throw new Error("Not registered");

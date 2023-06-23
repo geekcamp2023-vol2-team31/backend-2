@@ -1,4 +1,4 @@
-import { ITechLevel } from "@/@types/entity";
+import { ITech, ITechLevel } from "@/@types/entity";
 
 export type IGetUsersMeResponse = {
   user: {
@@ -6,7 +6,7 @@ export type IGetUsersMeResponse = {
     name: string;
     bio: string;
     icon?: string | null;
-    userToTechs: { name: string; level: ITechLevel }[];
+    userToTechs: { tech: ITech; level: ITechLevel }[];
     teamsBelongs: { id: string; name: string }[];
     teamsOwns: { id: string; name: string }[];
   };

@@ -23,10 +23,7 @@ const get_users_me: RouteHandlerMethodWrapper<{
   await reply.status(200).send({
     user: {
       ...user,
-      userToTechs: user.userToTechs.map((item) => ({
-        name: item.tech.name,
-        level: item.level,
-      })),
+      userToTechs: user.userToTechs,
     },
   });
 };
