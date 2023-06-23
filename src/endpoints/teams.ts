@@ -14,6 +14,7 @@ import { FastifyInstance } from "fastify";
 import { isUserInTeamAndThrow } from "@/utils/isUserInTeamAndThrow";
 import { setupTeamsComments } from "@/endpoints/teams_comments";
 import { setupTeamsProducts } from "@/endpoints/teams_products";
+import { setupTeamsLinks } from "@/endpoints/teams_link";
 
 const post_teams: RouteHandlerMethodWrapper<{
   Body: IPostTeamsBody;
@@ -75,6 +76,7 @@ const setupTeams = (app: FastifyInstance) => {
   app.delete("/teams/:teamId", delete_teams_teamId);
   setupTeamsComments(app);
   setupTeamsProducts(app);
+  setupTeamsLinks(app);
 };
 
 export { setupTeams };
