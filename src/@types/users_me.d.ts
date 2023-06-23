@@ -17,7 +17,6 @@ export type IPutUsersMeBody = {
     name: string;
     bio: string;
     icon?: string;
-    userToTechs: { name: string; level: ITechLevel }[];
   };
 };
 

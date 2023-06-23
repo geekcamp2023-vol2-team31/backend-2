@@ -8,8 +8,7 @@ import {
   IPutUsersMeTeamParams,
   IPutUsersMeTeamResponse,
 } from "@/@types/users_me";
-import { Team, UserToTech } from "@/entity";
-import { getOrCreateTech } from "@/utils/tech";
+import { Team } from "@/entity";
 import { source } from "@/database";
 import { setupUsersMeTechs } from "@/endpoints/users_me_techs";
 
@@ -42,23 +41,6 @@ const put_users_me: RouteHandlerMethodWrapper<{
   user.bio = newUser.bio;
   user.icon = newUser.icon || undefined;
   await source.manager.save(user);
-  for (const val of newUser.userToTechs) {
-    const tech = await getOrCreateTech(val.name);
-    const userToTech = await source.manager.findOneBy(UserToTech, {
-      user,
-      tech,
-    });
-    if (userToTech) {
-      userToTech.level = val.level;
-      await source.manager.save(userToTech);
-      continue;
-    }
-    const item = new UserToTech();
-    item.user = user;
-    item.tech = tech;
-    item.level = val.level;
-    await source.manager.save(tech);
-  }
   await reply.status(204);
 };
 
