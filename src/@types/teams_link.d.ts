@@ -4,9 +4,14 @@ export type ITeamsLinkResponse = {
   links: ILink[];
 };
 
-export type IPostTeamsLinkBody = {
+export type ITeamsLinkBody = {
   link: {
     left: string;
     right: string;
   };
+};
+
+export type ITeamsLinkParams = {
+  teamId: string;
+  linkId: string;
 };
