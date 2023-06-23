@@ -72,7 +72,10 @@ const put_users_me_teams_invitationCode: RouteHandlerMethodWrapper<{
   team.members.push(user);
   await source.manager.save(team);
   await reply.status(200).send({
-    teamId: team.id,
+    team: {
+      id: team.id,
+      name: team.name,
+    },
   });
 };
 

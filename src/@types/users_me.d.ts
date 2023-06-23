@@ -25,5 +25,8 @@ export type IPutUsersMeTeamParams = {
   invitationCode: string;
 };
 export type IPutUsersMeTeamResponse = {
-  teamId: string;
+  team: {
+    id: string;
+    name: string;
+  };
 };
