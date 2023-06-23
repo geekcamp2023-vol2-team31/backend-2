@@ -1,5 +1,5 @@
-import { ITeam, IUser } from "@/@types";
 import { isUserInTeam } from "./isUserInTeam";
+import { ITeam, IUser } from "@/@types/entity";
 
 export const isUserInTeamAndThrow = (
   user: IUser,

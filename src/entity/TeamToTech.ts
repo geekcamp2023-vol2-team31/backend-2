@@ -1,7 +1,7 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Tech } from "@/entity/Tech";
 import { Team } from "@/entity/Team";
-import { ITeamToTech } from "@/@types";
+import { ITeamToTech } from "@/@types/entity";
 
 @Entity()
 class TeamToTech implements ITeamToTech {

@@ -1,16 +1,17 @@
 import { RouteHandlerMethodWrapper } from "@/endpoints/RouteHandlerMethodWrapper";
-import { IPostTeamsBody } from "@/@types/team/ITeamsPostBody";
-import { IPostTeamsResponse } from "@/@types/team/ITeamsPostResponse";
-import { UnauthorizedError } from "@/@types/error/Error";
+import {
+  IPostTeamsBody,
+  IPostTeamsResponse,
+  ITeamGetResponse,
+  ITeamParams,
+} from "@/@types/teams";
+import { UnauthorizedError } from "@/@types.old/error/Error";
 import { getUser } from "@/utils/auth";
 import { uuid } from "@/utils/uuid";
 import { Team } from "@/entity";
 import { source } from "@/database";
 import { FastifyInstance } from "fastify";
-import { ITeamGetParams } from "@/@types/team/ITeamGetParams";
-import { ITeamGetResponse } from "@/@types/team/ITeamGetResponse";
 import { isUserInTeamAndThrow } from "@/utils/isUserInTeamAndThrow";
-import {ITeamDeleteParams} from "@/@types/team/ITeamDeleteParams";
 
 const post_teams: RouteHandlerMethodWrapper<{
   Body: IPostTeamsBody;
@@ -39,7 +40,7 @@ const post_teams: RouteHandlerMethodWrapper<{
 };
 
 const get_teams_teamId: RouteHandlerMethodWrapper<{
-  Params: ITeamGetParams;
+  Params: ITeamParams;
   Reply: ITeamGetResponse;
 }> = async (request) => {
   const { teamId } = request.params;
@@ -53,7 +54,7 @@ const get_teams_teamId: RouteHandlerMethodWrapper<{
 };
 
 const delete_teams_teamId: RouteHandlerMethodWrapper<{
-  Params: ITeamDeleteParams;
+  Params: ITeamParams;
 }> = async (request) => {
   const { teamId } = request.params;
   const user = await getUser(request);

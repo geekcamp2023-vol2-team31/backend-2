@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { UserToTech } from "@/entity/UserToTech";
 import { TeamToTech } from "@/entity/TeamToTech";
-import { ITech } from "@/@types";
+import { ITech } from "@/@types/entity";
 
 @Entity()
 class Tech implements ITech {

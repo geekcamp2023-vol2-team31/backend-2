@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { Team } from "@/entity/Team";
 import { UserToTech } from "@/entity/UserToTech";
-import { IUser } from "@/@types";
+import { IUser } from "@/@types/entity";
 
 @Entity()
 class User implements IUser {

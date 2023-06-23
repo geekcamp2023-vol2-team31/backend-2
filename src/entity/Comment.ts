@@ -6,12 +6,12 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Team } from "@/entity/Team";
-import { IComment } from "@/@types";
+import { IComment } from "@/@types/entity";
 
 @Entity()
 class Comment implements IComment {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
   @Column()
   body: string;
   @Column()

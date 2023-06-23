@@ -1,4 +1,4 @@
-import { ITeam, IUser } from "@/@types";
+import { ITeam, IUser } from "@/@types/entity";
 
 export const isUserInTeam = (user: IUser, team: ITeam) => {
   const isUserInMemberFlg =

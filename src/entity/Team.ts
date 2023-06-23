@@ -8,11 +8,11 @@ import {
 } from "typeorm";
 import { User } from "@/entity/User";
 import { Comment } from "@/entity/Comment";
-import { ITeam } from "@/@types";
+import { Product } from "@/entity/Product";
+import { ITeam } from "@/@types/entity";
 
 @Entity()
 class Team implements ITeam {
-  //
   @PrimaryColumn()
   id: string;
   @Column({ nullable: true })
@@ -25,5 +25,7 @@ class Team implements ITeam {
   owner: User;
   @OneToMany(() => Comment, (comment) => comment.team)
   comments: Comment[];
+  @OneToMany(() => Product, (products) => products.team)
+  products: Product[];
 }
 export { Team };
