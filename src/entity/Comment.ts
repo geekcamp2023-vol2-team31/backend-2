@@ -6,7 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Team } from "@/entity/Team";
-import { IComment } from "@/@types/entity";
+import { IComment, ICommentType } from "@/@types/entity";
 
 @Entity()
 class Comment implements IComment {
@@ -15,7 +15,7 @@ class Comment implements IComment {
   @Column()
   body: string;
   @Column()
-  type: "problem" | "goal" | "solution";
+  type: ICommentType;
   @ManyToOne(() => Team)
   @JoinColumn({ name: "teamId", referencedColumnName: "id" })
   team: Team;

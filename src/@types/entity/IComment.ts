@@ -1,6 +1,7 @@
 export interface IComment {
   id: string;
   body: string;
-  type: "problem" | "goal" | "solution";
-  next?: IComment;
+  type: ICommentType;
 }
+
+export type ICommentType = "problem" | "goal" | "solution";

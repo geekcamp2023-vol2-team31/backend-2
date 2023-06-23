@@ -1,6 +1,10 @@
 import { RouteHandlerMethodWrapper } from "@/endpoints/RouteHandlerMethodWrapper";
 import { ITeamParams } from "@/@types";
-import { IGetTeamsCommentsResponse } from "@/@types/teams_comments";
+import {
+  IGetTeamsCommentsResponse,
+  IPostTeamsCommentResponse,
+  IPostTeamsCommentsBody,
+} from "@/@types/teams_comments";
 import { isUserInTeamAndThrow } from "@/utils/isUserInTeamAndThrow";
 import { source } from "@/database";
 import { Team, Comment } from "@/entity";
@@ -22,8 +26,30 @@ const get_teams_teamId_comments: RouteHandlerMethodWrapper<{
   });
 };
 
+const post_teams_teamId_comments: RouteHandlerMethodWrapper<{
+  Params: ITeamParams;
+  Body: IPostTeamsCommentsBody;
+  Reply: IPostTeamsCommentResponse;
+}> = async (request, reply) => {
+  const teamId = request.params.teamId;
+  const user = await getUser(request);
+  const team = await source.manager.findOne(Team, { where: { id: teamId } });
+  if (!team) throw new Error("The team is not found.");
+  isUserInTeamAndThrow(user, team);
+  const comment = new Comment();
+  comment.body = request.body.comment.body;
+  comment.type = request.body.comment.type;
+  comment.team = team;
+  await source.manager.save(comment);
+  const comments = await source.manager.find(Comment, { where: { team } });
+  await reply.status(200).send({
+    comments,
+  });
+};
+
 const setupTeamsComments = (app: FastifyInstance) => {
   app.get("/teams/:teamId/comments", get_teams_teamId_comments);
+  app.post("/teams/:teamId/comments", post_teams_teamId_comments);
 };
 
 export { setupTeamsComments };
