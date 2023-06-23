@@ -10,7 +10,6 @@ import { User } from "@/entity/User";
 import { Comment } from "@/entity/Comment";
 import { Product } from "@/entity/Product";
 import { ITeam } from "@/@types/entity";
-import { TeamToTech } from "@/entity/TeamToTech";
 
 @Entity()
 class Team implements ITeam {
@@ -28,7 +27,5 @@ class Team implements ITeam {
   comments: Comment[];
   @OneToMany(() => Product, (products) => products.team)
   products: Product[];
-  @OneToMany(() => TeamToTech, (teamToTech) => teamToTech.team)
-  techsUses: TeamToTech[];
 }
 export { Team };

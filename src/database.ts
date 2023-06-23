@@ -1,14 +1,6 @@
 import { DataSource } from "typeorm";
 import "dotenv/config";
-import {
-  Comment,
-  Link,
-  Team,
-  TeamToTech,
-  Tech,
-  User,
-  UserToTech,
-} from "@/entity/";
+import { Comment, Link, Team, Tech, User, UserToTech } from "@/entity/";
 import { ProductToTech } from "@/entity/ProductToTech";
 import { Product } from "@/entity/Product";
 
@@ -24,7 +16,6 @@ const datasource = new DataSource({
   entities: [
     Comment,
     Team,
-    TeamToTech,
     User,
     UserToTech,
     ProductToTech,
