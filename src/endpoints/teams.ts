@@ -12,6 +12,7 @@ import { Team } from "@/entity";
 import { source } from "@/database";
 import { FastifyInstance } from "fastify";
 import { isUserInTeamAndThrow } from "@/utils/isUserInTeamAndThrow";
+import { setupTeamsComments } from "@/endpoints/teams_comments";
 
 const post_teams: RouteHandlerMethodWrapper<{
   Body: IPostTeamsBody;
@@ -71,6 +72,7 @@ const setupTeams = (app: FastifyInstance) => {
   app.post("/teams", post_teams);
   app.get("/teams/:teamId", get_teams_teamId);
   app.delete("/teams/:teamId", delete_teams_teamId);
+  setupTeamsComments(app);
 };
 
 export { setupTeams };

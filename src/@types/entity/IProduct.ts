@@ -1,6 +1,4 @@
-import { IComment } from "./IComment";
-import { ITech } from "./ITech";
-import { IProductToTech } from "./IProductToTech";
+import { IComment, IProductToTech } from "@/@types";
 
 export interface IProduct {
   id: string;
