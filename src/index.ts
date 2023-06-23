@@ -15,7 +15,9 @@ const SESSION_TTL = Number(process.env.SESSION_TTL) || 86400;
 const startFastifyServer = async (fastifyPort: number) => {
   const app = fastify().withTypeProvider<TypeBoxTypeProvider>();
   try {
-    await app.register(cors, {});
+    await app.register(cors, {
+      origin: "*",
+    });
     await app.register(fastifySocket, {});
     await app.register(cookie, {});
     await app.register(fastifySession, {
