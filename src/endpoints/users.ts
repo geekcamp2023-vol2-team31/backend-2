@@ -11,6 +11,7 @@ import {
 import { Team, UserToTech } from "@/entity";
 import { getOrCreateTech } from "@/utils/tech";
 import { source } from "@/database";
+import { setupUsersMeTechs } from "@/endpoints/users_me_techs";
 
 const get_users_me: RouteHandlerMethodWrapper<{
   Params: Record<string, never>;
@@ -104,6 +105,7 @@ const setupUsers = (app: FastifyInstance) => {
   app.put("/users/me", put_users_me);
   app.put("/users/me/teams/:invitationCode", put_users_me_teams_invitationCode);
   app.delete("/users/me/teams/:teamId", delete_users_me_teams_invitationCode);
+  setupUsersMeTechs(app);
 };
 
 export { setupUsers };
