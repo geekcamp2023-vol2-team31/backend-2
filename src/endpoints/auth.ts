@@ -27,6 +27,7 @@ const post_auth: RouteHandlerMethodWrapper<{
       message: "Invalid token",
       isFirstLogin: false,
     });
+    return;
   }
   const res = (await req.json()) as unknown as GithubUserResponse;
   request.session.set("githubId", res.id);
