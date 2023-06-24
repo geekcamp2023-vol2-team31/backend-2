@@ -48,7 +48,10 @@ const get_teams_teamId: RouteHandlerMethodWrapper<{
 }> = async (request) => {
   const { teamId } = request.params;
   const user = await getUser(request);
-  const team = await source.manager.findOneBy(Team, { id: teamId });
+  const team = await source.manager.findOne(Team, {
+    where: { id: teamId },
+    relations: ["members"],
+  });
   if (!team) {
     throw new Error("Team not found");
   }
