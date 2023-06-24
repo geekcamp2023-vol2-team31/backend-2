@@ -21,6 +21,7 @@ class Comment implements IComment {
   @JoinColumn()
   team: Team;
   @OneToOne(() => Comment)
+  @JoinColumn()
   next?: Comment;
 }
 
