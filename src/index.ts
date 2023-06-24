@@ -16,7 +16,8 @@ const startFastifyServer = async (fastifyPort: number) => {
   const app = fastify().withTypeProvider<TypeBoxTypeProvider>();
   try {
     await app.register(cors, {
-      origin: "*",
+      origin: "http://localhost:3000",
+      credentials: true,
     });
     await app.register(fastifySocket, {});
     await app.register(cookie, {});
