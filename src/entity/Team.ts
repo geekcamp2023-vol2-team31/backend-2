@@ -17,11 +17,11 @@ class Team implements ITeam {
   id: string;
   @Column({ nullable: true })
   invitationCode?: string;
-  @ManyToMany(() => User, (user) => user.teamsBelongs)
+  @ManyToMany(() => User, (user) => user.teamsBelongs, { eager: true })
   members: User[];
   @Column()
   name: string;
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   owner: User;
   @OneToMany(() => Comment, (comment) => comment.team)
   comments: Comment[];
